@@ -2,7 +2,7 @@ const fs = require('fs').promises
 const camelcase = require('camelcase')
 const { promisify } = require('util')
 const rimraf = promisify(require('rimraf'))
-const svgr = require('@svgr/core').default
+const svgr = require('@svgr/core').transform
 const babel = require('@babel/core')
 const { compile: compileVue } = require('@vue/compiler-dom')
 
@@ -88,7 +88,7 @@ function exportAll(icons, format, includeExtension = true) {
 }
 
 async function buildIcons(package, style, format) {
-  let outDir = `./${package}/${style}`
+  let outDir = `./packages/${package}/${style}`
   if (format === 'esm') {
     outDir += '/esm'
   }
@@ -127,15 +127,15 @@ async function buildIcons(package, style, format) {
 function main(package) {
   console.log(`Building ${package} package...`)
 
-  Promise.all([rimraf(`./${package}/outline/*`), rimraf(`./${package}/filled/*`)])
+  Promise.all([rimraf(`./packages/${package}/outline/*`), rimraf(`./packages/${package}/filled/*`)])
     .then(() =>
       Promise.all([
         buildIcons(package, 'filled', 'esm'),
         buildIcons(package, 'filled', 'cjs'),
         buildIcons(package, 'outline', 'esm'),
         buildIcons(package, 'outline', 'cjs'),
-        fs.writeFile(`./${package}/outline/package.json`, `{"module": "./esm/index.js"}`, 'utf8'),
-        fs.writeFile(`./${package}/filled/package.json`, `{"module": "./esm/index.js"}`, 'utf8'),
+        fs.writeFile(`./packages/${package}/outline/package.json`, `{"module": "./esm/index.js"}`, 'utf8'),
+        fs.writeFile(`./packages/${package}/filled/package.json`, `{"module": "./esm/index.js"}`, 'utf8'),
       ])
     )
     .then(() => console.log(`Finished building ${package} package.`))

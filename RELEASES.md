@@ -27,8 +27,8 @@ Address the icon changes in Figma. Use the [Export helper plugin](https://github
 ### 3. Export icons
 
 1. Export the icons from Figma into your local version of the repo.
-2. Run `npm run build` to create optimized files (this may introduce issues, as the SVG code gets modified)
-3. Run `npm run prepublishOnly` to prep the modules for local testing
+2. Run `yarn build` to create optimized files (this may introduce issues, as the SVG code gets modified)
+3. Run `yarn prepublishOnly` to prep the modules for local testing
 
 ### 4. Test the Vue module
 
