@@ -36,9 +36,8 @@ Locally verify icons render correctly. You can use the [bitcoinicons.com](https:
 
 This is an example of installing the pre-published module and running the site.
 ```
-npm uninstall @bitcoin-design/bitcoin-icons-vue
-npm install {{ your workspace directory }}/Bitcoin-Icons/vue
-npm run serve
+cd packages/website
+yarn serve
 ```
 
 ### 5. Test the React module
@@ -48,7 +47,7 @@ There is a [simple test project](https://github.com/GBKS/bitcoin-icons-react-tes
 ```
 npm i
 npm uninstall @bitcoin-design/bitcoin-icons-react
-npm install {{ your workspace directory }}/Bitcoin-Icons/react
+npm install {{ your workspace directory }}/Bitcoin-Icons/packages/react
 npm start
 ```
 
@@ -65,22 +64,27 @@ npm run serve
 
 ### 7. Push icon updates to Github
 
-Increase version numbers in the 4 package.json files (main folder, vue folder, react folder, raw folder).
-Update the 3 README files as needed (main folder, vue folder, react folder).
+To bump the version for all packages, run:
+
+`yarn workspaces foreach version -i patch`
+
+Replace patch with what part of the version you want to update: `major.minor.patch`. For example, ``yarn workspaces foreach version -i minor` would change version 0.1.7 to version 0.2.0.
+
+If needed, also update the README files for all packages manually.
 
 If everything looks good, create a branch and PR with the updated icons. Name it like "Milestone 0.1.7". Get it reviewed and merged.
 
 ### 8. Publish the Vue module
 
-From the `/vue` folder, run `npm publish`.
+Run `yarn workspace @bitcoin-design/bitcoin-icons-vue npm publish`.
 
 ### 9. Publish the React module
 
-From the `/react` folder, run `npm publish`.
+Run `yarn workspace @bitcoin-design/bitcoin-icons-react foreach npm publish`.
 
 ### 10. Publish the SVG module
 
-From the `/raw` folder, run `npm publish`.
+Run `yarn workspace @bitcoin-design/bitcoin-icons-svg npm publish`.
 
 ### 11. Publish the release
 
